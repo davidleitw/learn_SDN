@@ -12,19 +12,46 @@ class Hub(app_manager.RyuApp):
     def __init__(self, *args, **kwargs):
         super(Hub, self).__init__(*args, **kwargs)
 
-    @set_ev_cls(OFPSwitchFeatures, CONFIG_DISPATCHER)
-    def handler(self, ev):
-        pass
+    @set_ev_cls(ofp_event.EventOFPSwitchFeatures, CONFIG_DISPATCHER)
+    def switch_features_init(self, ev: OFPSwitchFeatures):
+        datapath = ev.msg.datapath
+        ofproto = datapath.ofproto
+        ofp_parser = datapath.ofproto_parser
+
+        match = ofp_parser.OFPMatch()
+        actions = [ofp_parser.OFPActionOutput(ofproto.OFPP_CONTROLLER,ofproto.OFPCML_NO_BUFFER)]
+
+        self.add_flow(datapath, 0, match, actions, "default flow entry")
      
-    def add_flow(self, datapath, priority, match, actions):
-        pass
+    def add_flow(self, datapath, priority, match, actions, msg):
+        ofproto = datapath.ofproto
+        ofp_parser = datapath.ofproto_parser
 
-    @set_ev_cls(OFPPacketIn, MAIN_DISPATCHER)
-    def packet_in_handler(self, ev):
+        inst = [ofp_parser.OFPInstructionActions(ofproto.OFPIT_APPLY_ACTIONS,
+                                             actions)]
+
+        mod = ofp_parser.OFPFlowMod(datapath=datapath,priority=priority,
+                                    match=match,instructions=inst);
+        print("install to datapath,"+msg)
+        datapath.send_msg(mod);
+
+    @set_ev_cls(ofp_event.EventOFPPacketIn, MAIN_DISPATCHER)
+    def packet_in_handler(self, ev: OFPPacketIn):
         msg = ev.msg
-        dp = msg.datapath
-        ofp = dp.ofproto
-        ofp_parser = dp.ofproto_parser
+        datapath = msg.datapath
+        ofproto = datapath.ofproto
+        ofp_parser = datapath.ofproto_parser
 
-        print('type of ev is {}, and msg = {}'.format(type(ev), msg))
+        in_port = msg.match['in_port']
+
+        print("get packet in, install flow entry,and lookback parket to datapath")
         
+        match = ofp_parser.OFPMatch();
+        actions = [ofp_parser.OFPActionOutput(ofproto.OFPP_FLOOD)]
+
+        self.add_flow(datapath,1,match,actions,"hub flow entry")
+
+        out = ofp_parser.OFPPacketOut(datapath=datapath,buffer_id=msg.buffer_id,
+                                            in_port=in_port,actions=actions)    
+
+        datapath.send_msg(out);
