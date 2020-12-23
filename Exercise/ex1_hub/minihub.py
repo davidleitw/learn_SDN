@@ -9,7 +9,9 @@ def setup():
     net = Mininet(controller=RemoteController)
 
     info("Create controller.\n")
+    #c0 = net.addController('controller', ip='localhost', port=6633)
     c0 = net.addController('controller', ip='127.0.0.1', port=6633)
+
 
     info("Create switch node.\n")
     s1 = net.addSwitch('s1')
@@ -18,12 +20,14 @@ def setup():
     h1 = net.addHost('h1')
     h2 = net.addHost('h2')
     h3 = net.addHost('h3')
-    
+    h4 = net.addHost('h4')
+
     info("Create links.\n")
     net.addLink(s1, h1)
     net.addLink(s1, h2)
     net.addLink(s1, h3)
-    
+    net.addLink(s1, h4)
+
     c0.start()
     s1.start([c0])
     
