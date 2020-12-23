@@ -12,4 +12,13 @@
 
 ## 定義controller - 初始化動作
 
-![](https://imgur.com/jV5nfZk.jpg)
+```python
+from ryu.base import app_manager
+
+class Hub(app_manager.RyuApp):
+    # 指定使用openflow1.3的版本
+    OFP_VERSIONS = [ofproto_v1_3.OFP_VERSION]
+
+    def __init__(self, *args, **kwargs):
+        super(Hub, self).__init__(*args, **kwargs)
+```
