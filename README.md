@@ -1,7 +1,5 @@
 # learn_SDN
 
-[TOC]
-
 此專案用來整理一些學習SDN的相關知識以及參考資料。
 由於剛開始學習沒多久，所以會著重於個人學習的**順序**，希望在寫心得的同時也可以幫助到一些想要研究SDN的朋友。
 
@@ -12,11 +10,6 @@
 在學習SDN之前我準備先複習了一輪 [computer networking a top-down approach 7th](https://www.ucg.ac.me/skladiste/blog_44233/objava_64433/fajlovi/Computer%20Networking%20_%20A%20Top%20Down%20Approach,%207th,%20converted.pdf)，之前大學學過的很多部份已經有點忘記了，所以先把傳統的網路概論複習一輪，之後進入SDN的學習時，才會比較清楚知道為什麼要提出SDN的概念，SDN具體來說是要解決哪些傳統架構無法解決的問題。
 
 之後會陸續整理一點網路的基礎理論心得，讓之後SDN的一些概念比較好解釋。
-
-## 近期準備閱讀的資料
-
-- [OpenFlow 1.0 spec](https://opennetworking.org/wp-content/uploads/2013/04/openflow-spec-v1.0.0.pdf)
-- [OpenFlow: Enabling Innovation in Campus Networks](https://www.researchgate.net/publication/220195143_OpenFlow_Enabling_innovation_in_campus_networks)
 
 ## 什麼是SDN以及SDN的發展歷史
 
@@ -47,7 +40,7 @@ SDN並非一種技術，而是一種設計的理念，只要符合**控制面以
 
 有時候網路設備也被稱為**Data Plane**。
 
-### 南向界面(Southbound Interface)
+### 南向界面(Southbound Interface/Control Data Plane Interface)
 南向界面是指Data Plane以及Controller之間的界面，在SDN架構中，希望南向界面是標準化的，這樣才可以讓軟體可以不受硬體的限制，在任何設備上都能執行，不過現在還只是理想。
 
 目前主流的南向界面標準是OpenFlow協定，雖然還有其他各種南向界面，不過還是OpenFlow為大宗。
@@ -67,7 +60,27 @@ SDN並非一種技術，而是一種設計的理念，只要符合**控制面以
 
 
 ## OpenFlow協定
+OpenFlow為最有代表性的南向界面，被視為第一個SDN的標準之一。它最初在SDN環境中定義了通信協定，使SDN控制器能夠與物理和虛擬的交換機和路由器等網路裝置的轉發平面直接進行互動，從而更好地適應不斷變化的業務需求。
 
+
+### 概述([維基百科](https://zh.wikipedia.org/wiki/OpenFlow))
+
+OpenFlow能夠啟動遠端的控制器，經由網路交換器，決定網路封包要由何種路徑通過網路交換機。這個協定的發明者，將它當成軟體定義網路（Software-defined networking）的啟動器。
+
+OpenFlow允許從遠端控制網路交換器的封包轉送表，透過新增、修改與移除封包控制規則與行動，來改變封包轉送的路徑。比起用 存取控制列表 (ACLs) 和路由協定，允許更複雜的流量管理。同時，OpenFlow允許不同供應商用一個簡單，開源的協定去遠端管理交換機（通常提供專有的介面和描述語言)。
+
+### 協定內容
+
+因為OpenFlow算是一個很有指標性的SDN協定，所以對於要學習SDN的人來說，他的specification也非常值得一看，我們會就**OpenFlow**獨立一個章節來談論。請點以下連結:
+
+- [OpenFlow協定]()
+
+--- 
+
+> 參考資料
+> - [OpenFlow 1.0 spec](https://opennetworking.org/wp-content/uploads/2013/04/openflow-spec-v1.0.0.pdf)
+> - [OpenFlow: Enabling Innovation in Campus Networks](https://www.researchgate.net/publication/220195143_OpenFlow_Enabling_innovation_in_campus_networks)
+> - [協定心得](https://www.cnblogs.com/ssyfj/tag/SDN/)
 
 
 ## 使用工具版本
