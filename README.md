@@ -1,5 +1,7 @@
 # learn_SDN
 
+[TOC]
+
 此專案用來整理一些學習SDN的相關知識以及參考資料。
 由於剛開始學習沒多久，所以會著重於個人學習的**順序**，希望在寫心得的同時也可以幫助到一些想要研究SDN的朋友。
 
@@ -16,7 +18,63 @@
 - [OpenFlow 1.0 spec](https://opennetworking.org/wp-content/uploads/2013/04/openflow-spec-v1.0.0.pdf)
 - [OpenFlow: Enabling Innovation in Campus Networks](https://www.researchgate.net/publication/220195143_OpenFlow_Enabling_innovation_in_campus_networks)
 
-讀完之後會先用ryu搭配mininet寫幾個簡單的練習
+## 什麼是SDN以及SDN的發展歷史
+
+> 參考文章
+> - [SDN簡介](https://feisky.gitbooks.io/sdn/content/sdn/)
+> - [SDN發展趨勢](https://hackmd.io/@cnsrl/SJur_2twL)
+
+傳統網路的一些特點:
+- 每個節點是由設備單獨控制，屬於分散式架構。
+- 控制面以及轉接面放在同一個設備上。
+- 管理員無法直接的操作封包轉送行為，僅能控制設備的通訊協定，再藉由通訊協定的規則去操作設備。
+- 通訊協定對於設備的影響是固定的，無法控制非自己協定內的規則。
+
+SDN想要採取集中式控制，要求轉接面跟控制面分離，實際上由遠端的controller計算以及分送每一個路由器的轉送表，管理員可以直接操作設備轉接封包的行為。
+
+![](http://i.imgur.com/uF2pcH0.jpg)
+
+SDN並非一種技術，而是一種設計的理念，只要符合**控制面以及轉接面的分離**，以及開放的**可程式化**設計界面，就可以稱為SDN架構。通常SDN也伴隨著**集中控制**的特性，藉由在controller獲得的網路全局資料(並非傳統只能獲得局部資料)，根據其業務邏輯進行調整及優化。
 
 
-- [Mininet Python API Reference](http://mininet.org/api/annotated.html)
+## 常用名詞解釋
+
+![](https://sites.google.com/a/cnsrl.cycu.edu.tw/da-shu-bi-ji/_/rsrc/1565708281052/sdn/sdn_architecture.png)
+
+
+### Network Device 網路設備
+網路設備不僅限於實體的設備(例如switch,路由器等等)，也有可能是虛擬的switch(例如OVS)，封包在網路設備之前被處理以及轉送。網路設備藉由Southbound Interface接收controller發過來的指令配置轉送的規則，也可以透過Southbound Interface來將一些資料回傳給controller。
+
+有時候網路設備也被稱為**Data Plane**。
+
+### 南向界面(Southbound Interface)
+南向界面是指Data Plane以及Controller之間的界面，在SDN架構中，希望南向界面是標準化的，這樣才可以讓軟體可以不受硬體的限制，在任何設備上都能執行，不過現在還只是理想。
+
+目前主流的南向界面標準是OpenFlow協定，雖然還有其他各種南向界面，不過還是OpenFlow為大宗。
+
+> 因為我也還是新手的緣故，所以也是從OpenFlow開始學習SDN的，此篇心得文也會著重在OpenFlow協定上。
+
+### 控制器(Controller)
+**Controller**是SDN的核心，北向有應用程式提供業務邏輯經由Controller將轉送的規則藉由Southbound Interface傳給網路設備，屬於SDN架構中最重要的部份。
+
+目前Controller百家爭鳴，有很多開源的controller(例如 Ryu, FloodLight, NOX/POX)等等，也有很多公司開發的商用版本，本篇心得文會使用Ryu去做一些OpenFlow相關的實驗。
+
+### 北向界面(Northbound Interface)
+北向界面是指應用程式以及Controller之間溝通的界面，目前還沒有一個統一的標準，通常會因為狀況不同而採用不同的方案。
+
+### Application(Services)
+這裡的Application是指幾乎所有網路的應用，包含load balancing, security, monitoring等等.. 應用程式的業務邏輯就透過Controller傳送規則給網路設備，讓設備彈性的執行我們要的功能。
+
+
+## OpenFlow協定
+
+
+
+## 使用工具版本
+
+* mininet: 2.3.0d6
+* ryu-manager: 4.34
+
+## 參考資料
+
+* [Mininet Python API Reference](http://mininet.org/api/annotated.html)
