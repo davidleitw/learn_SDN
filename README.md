@@ -73,7 +73,7 @@ OpenFlow允許從遠端控制網路交換器的封包轉送表，透過新增、
 
 因為OpenFlow算是一個很有指標性的SDN協定，所以對於要學習SDN的人來說，他的specification也非常值得一看，我們會就**OpenFlow**獨立一個章節來談論。請點以下連結:
 
-- [OpenFlow協定]()
+- [OpenFlow協定](https://github.com/davidleitw/learn_SDN/blob/master/OpenFlow.md)
 
 --- 
 
