@@ -10,6 +10,19 @@
 
 > 1.0版本與之後的版本不兼容，所以1.0要最先介紹。 **1.0以及1.3版本被選為長期支持的穩定版本**
 
+因為OpenFlow是支援OpenFlow協定的網路設備跟Controller兩者溝通的橋樑，所以我們在探討此協定的時候也要分成兩大部份去看。
+
+- 支援OpenFlow的switch
+  - Flow Table(存放規則)
+    - Header Fields
+    - Counters
+    - Actions
+  - Matching(配對條件流程)
+  - Secure Channel
+- OpenFlow Protocol Message
+  - Controller-to-Switch
+  - Asynchronous
+  - Symmetric
 
 
 
