@@ -66,6 +66,7 @@ class Switch(app_manager.RyuApp):
         src = eth.src
 
         dpid = format(datapath.id, "d").zfill(16)
+        print('datapathID = {}, dpid = {}'.format(datapath.id, dpid))
         self.mac_table.setdefault(dpid, {})
 
         self.logger.info("packet in %s %s %s %s", dpid, src, dst, in_port)
