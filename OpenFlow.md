@@ -114,6 +114,39 @@ Enqueue 可以將封包轉發至某個特定 port 的 queue 中，便於支援Qo
 
 ![](https://i.imgur.com/8L2cErK.png)
 
+## Matching
+
+### Packet flow in an OpenFlow switch: 封包處理流程 
+
+![](https://i.imgur.com/QD4VWvh.png)
+
+> Parse header fields步驟會按照下方的圖表進行
+
+封包會按照 flow entry 的優先度依序進行匹配
+- 匹配成功
+    - 更新 Counter，並且按照 actions 去執行
+    - 假設匹配到的 flow entry 並沒有設置 actions， 則**丟棄**此封包
+    - 假設**沒有匹配**到任何符合條件的 flow entry，則將**封包轉發至 Controller**
+
+### 解析封包獲得 Header field 用以檢索符合的 Flow entry
+
+![](https://i.imgur.com/wJHVTOf.png)
+
+#### 解析步驟可以簡單劃分成底下四點
+
+- 初始化 Headers
+    - 設置 Ingress Port
+    - 設置 Ethernet src, dst, type
+    - 其餘欄位設成0
+- 根據 Eth type 填寫 Header
+    - Eth type: 0x8100(802.1q)
+        - 設置 VLAN ID 跟 優先度
+    - Eth type: 0x0806(ARP) => **Optional**
+        - 設置 IPv4 src, dst
+    - Eth type: 0x0800(Ipv4)
+        - 設置 IPv4 src, dst, toc
+- 根據 IPv4 封包來確定是TCP/UDP/ICMP協定
+- 寫入TCP/UDP/ICMP協定資料
 
 ---
 
