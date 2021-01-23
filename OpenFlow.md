@@ -13,17 +13,17 @@
 
 底下會依照 OpenFlow 1.0 spec 的編排，去依據介紹完整的協定。
 
-- **Switch Components**
-  - Flow Table(存放規則)
-    - Header Fields
-    - Counters
-    - Actions
-  - Secure Channel
-- **Matching (配對條件流程)**
-- **OpenFlow Protocol Message**
-  - Controller-to-Switch
-  - Asynchronous
-  - Symmetric
+* [**Switch Components**](#OpenFlow-1.0-架構)
+  * [Flow Table(存放規則)](#Flow-Table)
+    * [Header Fields](#Header-Fields)
+    * [Counters](#Counters)
+    * [Actions](#Actions)
+* [**Matching (配對條件流程)**](#Matching)
+* [**Secure Channel**](#Secure-Channel)
+* [**OpenFlow Protocol Message**](#OpenFlow-Protocol-Message)
+  * Controller-to-Switch
+  * Asynchronous
+  * Symmetric
 
 ## OpenFlow 1.0 架構
 
@@ -147,6 +147,33 @@ Enqueue 可以將封包轉發至某個特定 port 的 queue 中，便於支援Qo
         - 設置 IPv4 src, dst, toc
 - 根據 IPv4 封包來確定是TCP/UDP/ICMP協定
 - 寫入TCP/UDP/ICMP協定資料
+
+
+## Secure Channel
+
+作為連結 Switch 與 Controller 的橋樑。
+
+## OpenFlow Protocol Message
+
+OpenFlow 協定訊息分成三大類
+- **Controller-to-Switch**: 此類消息通常由 Controller 主動發出
+- **Asynchronous**: 此類消息通常由 Switch 主動發出
+- **Symmetric**: 此類消息 Controller 以及 Switch 都可以發出
+
+### Controller-to-Switch
+
+- **Features** 
+    Features message 是初始化建立 TLS 連線時由 Controller 發送， 要求 Switch回覆它支援的 Option 功能。
+- **Configuration**
+    Controller 可以用 Configuration message 來設置或者查詢 Switch 的配置訊息。
+- **Modify-State**
+    Modify-State message 可以用來新增/修改/刪除位在 Switch 上的 Flow Table，也可以拿來設置 Switch 上 port 的屬性。
+- **Read-State**
+    Read-State message 用來讀取 Switch's Flow Table 狀態/統計資料以及 port 的狀態。
+- **Send-Packet**
+    Send-Packet message 用來傳送資料到指定 Switch 的 port。
+- **Barrier**
+    OFPT_BARRIER_REQUEST、OFPT_BARRIER_REPLY
 
 ---
 
