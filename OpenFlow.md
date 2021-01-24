@@ -167,21 +167,28 @@ OpenFlow 協定訊息分成三大類
 ### Controller-to-Switch
 
 - **Features** 
+    
     ```Features message``` 是初始化建立 TLS 連線時由 ```Controller``` 發送， 要求 ```Switch``` 回覆它支援的 Option 功能。
 - **Configuration**
+    
     ```Controller``` 可以用 ```Configuration message``` 來設置或者查詢 Switch 的配置訊息。
 - **Modify-State**
+    
     ```Modify-State message``` 可以用來新增/修改/刪除位在 Switch 上的 ```Flow Table```，也可以拿來設置 Switch 上 port 的屬性。
 - **Read-State**
+    
     ```Read-State message``` 用來讀取 ```Switch's Flow Table``` 狀態/統計資料以及 ```port``` 的狀態。
 - **Send-Packet**
+    
     ```Send-Packet message``` 用來傳送資料到指定 ```Switch``` 的 ```port```。
 - **Barrier**
+    
     ```OFPT_BARRIER_REQUEST```、```OFPT_BARRIER_REPLY```。
 
 ### Asynchronous
 
 - **Packet-in**
+    
     ```Packet-in message``` 會在兩種情況觸發, 轉送封包去 ```Controller```。
     - 沒有 match 到任何的 ```Flow entry```
     - match 到的 ```Flow entry``` 有著 ```packet-in action```
@@ -190,24 +197,30 @@ OpenFlow 協定訊息分成三大類
     
     對於不支援緩存的 ```Switch``` 或者 memory 空間不足的情況，```Packet-in``` 事件會把完整的 packet 轉送給 ```Controller```。
 - **Flow-Removed**
-    在 ```Controlle```r 傳送 ```flow modify message``` 時， 在封包裡面可以選擇填入 ```idle timeout```, ```hard timeout```。
+    
+    在 ```Controller``` 傳送 ```flow modify message``` 時， 在封包裡面可以選擇填入 ```idle timeout```, ```hard timeout```。
     - ```idle timeout```: ```Counter``` 會紀錄 ```flow entry``` 最後被 match 的時間點，如果超過就刪除。
     - ```hard timeout```: ```Counter``` 會紀錄 ```flow entry``` 被建立的時間，如果超過就刪除。
 
     ```Flow-Removed message``` 會在 Switch 刪除某條 ```Flow entry``` 時被觸發，傳訊告知```Controller```。
     
 - **Post-status**
+    
     在 ```Switch port``` 狀態改變時，傳送狀態更新給 ```Controller```。
 - **Error**
+    
     ```Switch``` 回傳錯誤訊息。
 
 ### Symmetric
 
 - **Hello**
+    
     初始化 OpenFlow 連線時使用。
 - **Echo**
+    
     ```Echo request/reply messages``` 可以由 ```Controller``` 或者 ```Switch``` 發起 ```request```，收到的一方必須回覆 ```reply```，可以藉此測試延遲，頻寬還有連線的狀況。
 - **Vendor**
+    
     自定義訊息
 
 ## Reference 
