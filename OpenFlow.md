@@ -25,6 +25,7 @@
   * [Controller-to-Switch](#Controller-to-Switch)
   * [Asynchronous](#Asynchronous)
   * [Symmetric](#Symmetric)
+* [結語](#結語)
 
 ## OpenFlow 1.0 架構
 
@@ -193,6 +194,7 @@ OpenFlow 協定訊息分成三大類
     - 沒有 match 到任何的 ```Flow entry```
     - match 到的 ```Flow entry``` 有著 ```packet-in action```
     
+    
     假設 Switch 還有足夠的 memory 去緩衝 packet 資料，```Switch``` 會傳送部份的 ```packet header``` (默認128 bytes) 以及 ```buffer ID``` 給 ```Controller```。
     
     對於不支援緩存的 ```Switch``` 或者 memory 空間不足的情況，```Packet-in``` 事件會把完整的 packet 轉送給 ```Controller```。
@@ -201,6 +203,7 @@ OpenFlow 協定訊息分成三大類
     在 ```Controller``` 傳送 ```flow modify message``` 時， 在封包裡面可以選擇填入 ```idle timeout```, ```hard timeout```。
     - ```idle timeout```: ```Counter``` 會紀錄 ```flow entry``` 最後被 match 的時間點，如果超過就刪除。
     - ```hard timeout```: ```Counter``` 會紀錄 ```flow entry``` 被建立的時間，如果超過就刪除。
+
 
     ```Flow-Removed message``` 會在 Switch 刪除某條 ```Flow entry``` 時被觸發，傳訊告知```Controller```。
     
@@ -223,6 +226,21 @@ OpenFlow 協定訊息分成三大類
     
     自定義訊息
 
+## 結語
+
+在 ```OpenFlow``` 規格書中通常分成前半部份的**規範**以及後半部份的**協議實作** 
+
+**規範**通常是講解觀念部份，後半部的**協議**通常探討實現規範的細節，本文章只有大概介紹一下規範讓讀者可以快速的了解 ```OpenFlow``` 的概要。
+
+目前主流的 ```OpenFlow``` 版本為 ```OpenFlow 1.3``` ，相較於 ```OpenFlow 1.0``` 增加了很多方便的新功能， 所以大概看過 ```OpenFlow 1.0``` 之後建議將閱讀重心放在1.3版本。
+
+關於 ```OpenFlow 1.3``` 我在網路上找資料的時候有找到中文的全文翻譯，很推薦搭配著原文的規格書一起看， 連結在此: [OpenFlow 1.3](https://www.jianshu.com/p/acfeae1771b3)。 
+
+**後續的實作都會採用1.3版本為主**， 建議先大概看一輪上述的1.3文檔再繼續接下來的練習。
+
+
+
+
 ## Reference 
 
 > - [OpenFlow 1.0 spec](https://opennetworking.org/wp-content/uploads/2013/04/openflow-spec-v1.0.0.pdf)
@@ -230,3 +248,4 @@ OpenFlow 協定訊息分成三大類
 > - [OpenFlow：简述对OpenFlow协议的认识](https://blog.csdn.net/qq_29229567/article/details/88796456)
 > - [软件定义网络基础---OpenFlow流表](https://www.cnblogs.com/ssyfj/p/11620375.html)
 > - [OpenFlow 1.0 協議講解](https://blog.csdn.net/lady_killer9/article/details/104540806)
+> - [OpenFlow 1.3 中文解析](https://www.jianshu.com/p/acfeae1771b3)
